@@ -19,16 +19,16 @@
                 <DataGrid x:Name="dg_Stocks" ></DataGrid>
             </TabItem>
             <TabItem Header="List of Stock"  >
-            
 
-                    <ListView x:Name="lv_Stock_List" HorizontalAlignment="Left" VerticalAlignment="Top" Width="194" Height="200">
+
+                <ListView x:Name="lv_Stock_List" HorizontalAlignment="Left" VerticalAlignment="Top" Width="194" Height="200">
                     <!--<ListViewItem Content="AAPL"></ListViewItem>-->
                     <ListViewItem Content="GOOG"></ListViewItem>
                     <ListViewItem Content="TSLA"></ListViewItem>
                     <ListViewItem Content="AMZN"></ListViewItem>
                     <!--<ListViewItem Content="601288"></ListViewItem>-->
 
-                    
+
                 </ListView>
             </TabItem>
             <TabItem Header="Details" />
@@ -36,7 +36,7 @@
         <DockPanel Grid.Row="2">
             <!--<Button DockPanel.Dock="Right" Content="Update" HorizontalAlignment="Right" Padding="10,0" 
                     Background="Transparent" Foreground="DarkBlue" BorderBrush="DarkBlue" Click="Button_Click"/>-->
-           
+
             <Button Name="btn_AddStock" DockPanel.Dock="Right" Content="Add" HorizontalAlignment="Right" Padding="10,0" 
                     Background="DarkBlue" Foreground="White" BorderThickness="0" Click="btn_AddStock_Click" />
             <TextBox x:Name="txtbx_Stock"  DockPanel.Dock="Right"  Width="70" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0" 

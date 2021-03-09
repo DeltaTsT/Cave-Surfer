@@ -30,7 +30,7 @@ namespace Stock_Market
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-         List<string> tickerlist = new List<string> { "AAPL", "GOOG", "AMZN", "FB" };
+            List<string> tickerlist = new List<string> { "AAPL", "GOOG", "AMZN", "FB" };
 
 
 
@@ -63,7 +63,7 @@ namespace Stock_Market
             var tickerlist = Properties.Settings.Default.MyStockList;
 
             foreach (string ticker in tickerlist)
-            {         
+            {
                 foreach (var r in await cl_StockMarket.GetStockData(ticker, DateTime.Now.AddHours(-6).ToString("MM/dd/yyyy HH:mm"), DateTime.Now.ToString("MM/dd/yyyy HH:mm"), "daily"))
                 {
                     _manualReadTagList.Add(r);
@@ -79,11 +79,11 @@ namespace Stock_Market
         {
             List<StockMarket_Lib.StockPriceModel> _manualReadTagList = new List<StockMarket_Lib.StockPriceModel>();
             StockMarket_Lib.cl_StockMarket cl_StockMarket = new StockMarket_Lib.cl_StockMarket();
-            
+
 
             foreach (ListViewItem item in lv_Stock_List.Items)
             {
-                
+
                 foreach (var r in await cl_StockMarket.GetStockData(item.Content.ToString(), DateTime.Now.AddHours(-6).ToString("MM/dd/yyyy HH:mm"), DateTime.Now.ToString("MM/dd/yyyy HH:mm"), "daily"))
                 {
                     _manualReadTagList.Add(r);
@@ -100,8 +100,8 @@ namespace Stock_Market
             while (true)
             {
 
-         
-            List<StockMarket_Lib.StockPriceModel> _manualReadTagList = new List<StockMarket_Lib.StockPriceModel>();
+
+                List<StockMarket_Lib.StockPriceModel> _manualReadTagList = new List<StockMarket_Lib.StockPriceModel>();
 
                 List<string> tickerlist = new List<string> { "AAPL", "GOOG", "AMZN", "FB" };
 
@@ -110,13 +110,13 @@ namespace Stock_Market
                 foreach (string ticker in SavedSearchTerms)
                 {
                     foreach (var r in await cl_StockMarket.GetStockData(ticker, DateTime.Now.AddMilliseconds(-2).ToString("MM/dd/yyyy HH:mm"), DateTime.Now.ToString("MM/dd/yyyy HH:mm"), "daily"))
-                    {                   
-                    _manualReadTagList.Add(r);
+                    {
+                        _manualReadTagList.Add(r);
+                    }
                 }
-            }
                 await Task.Run(() =>
     {
-       
+
 
         Dispatcher.BeginInvoke(new Action(delegate
         {
@@ -128,11 +128,11 @@ namespace Stock_Market
         }));
         Thread.Sleep(3000);
     }
-                
+
                 //await Task.Run(() =>
                 //{
                 //    //Thread.Sleep(5000);
-                   
+
                 //    Dispatcher.BeginInvoke(new Action(delegate
                 //    {
 
@@ -153,7 +153,7 @@ namespace Stock_Market
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
 
-             await AutomaticallyUpdateStocks();
+            await AutomaticallyUpdateStocks();
             //    UpdateStocks2();
             //    //await Status();
             //    var result = await Task.Run(() =>
@@ -191,23 +191,23 @@ namespace Stock_Market
             public decimal AdjustedClose { get; set; }
             public decimal Volume { get; set; }
         }
-        bool IsItAgoodTicker (string ticker)
+        bool IsItAgoodTicker(string ticker)
         {
             try
             {
                 var r = cl_StockMarket.GetStockData(ticker, DateTime.Now.AddHours(-6).ToString("MM/dd/yyyy HH:mm"), DateTime.Now.ToString("MM/dd/yyyy HH:mm"), "daily");
-            return true;
-                    }
+                return true;
+            }
             catch (Exception)
             {
 
-            return false;
+                return false;
             }
 
         }
         private void btn_AddStock_Click(object sender, RoutedEventArgs e)
         {
-            if (IsItAgoodTicker(txtbx_Stock.Text)==true)
+            if (IsItAgoodTicker(txtbx_Stock.Text) == true)
             {
                 Properties.Settings.Default.MyStockList.Add(txtbx_Stock.Text);
                 Properties.Settings.Default.Save();
