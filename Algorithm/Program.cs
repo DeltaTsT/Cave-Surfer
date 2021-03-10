@@ -13,7 +13,11 @@ namespace Algorithm
         static async Task Main()
         {
 
-            List<CLASS_Ticker_DataBase> LIST_Ticker_Database = await LIST_Get_Database_Of_Ticker("TRCH", 120);
+            List<CLASS_Ticker_DataBase> LIST_Ticker_Historical_Database = await LIST_Get_Database_Of_Ticker("TRCH", 14);
+
+
+
+            List<CLASS_Ticker_DataBase> Sampled_DATA = Sample_Data_List(LIST_Ticker_Historical_Database, DateTime.Today.AddDays(-7), 25, 1);
 
 
 
@@ -22,13 +26,63 @@ namespace Algorithm
 
 
 
-            string[] ARRAY_My_Tickers = new string[] { "TRCH", "AMTX", "KOPN", "ANVS", "ORGO", "PYR.TO", "RIOT", "DAC", "MARA", "DXYN", "SI", "DQ", "AQMS", "ATOM", "PRTS", "AWH", "REGI", "FD.V" };
-            List<CLASS_Ticker_Info> LIST_Ticker_Objects = await LIST_Get_All_Ticker_Current_Info_From_Array(ARRAY_My_Tickers);
-            Show_Opens_In_Console(LIST_Ticker_Objects);
+
+
+            List<CLASS_Ticker_DataBase> LIST_Ticker_Prototype6_Database = Prototype6(LIST_Ticker_Historical_Database);
+
+
+
+
+
+            //string[] ARRAY_My_Tickers = new string[] { "TRCH", "AMTX", "KOPN", "ANVS", "ORGO", "PYR.TO", "RIOT", "DAC", "MARA", "DXYN", "SI", "DQ", "AQMS", "ATOM", "PRTS", "AWH", "REGI", "FD.V" };
+            //List<CLASS_Ticker_Info> LIST_Ticker_Objects = await LIST_Get_Tickers_Current_From_Array(ARRAY_My_Tickers);
+            //Show_Opens_In_Console(LIST_Ticker_Objects);
+        }
+
+        // ---------------------------------------------------------------------------------------------------------------
+        // ALGORITHM
+
+        static List<CLASS_Ticker_DataBase> Prototype6(List<CLASS_Ticker_DataBase> Database)
+        {
+            foreach (CLASS_Ticker_DataBase Line in Database)
+            {
+                Line.Average_Open_Close = Line.Open - Line.Close;
+            }
+
+
+
+
+
+
+
+
+
+
+            return Database;
         }
 
         // ---------------------------------------------------------------------------------------------------------------
         // FUNCTIONS
+
+        static List<CLASS_Ticker_DataBase> Sample_Data_List(List<CLASS_Ticker_DataBase> Database, System.DateTime Date, int Sample_Ammount, int Days_To_Skip = 0)
+        {
+            List<CLASS_Ticker_DataBase> Sampled_Database = new List<CLASS_Ticker_DataBase>();
+            CLASS_Ticker_DataBase Sampled = new CLASS_Ticker_DataBase();
+
+            int New_End = 0;
+            for (int i = 0; i <= Database.Count - 1; i++) { if (Database[i].Date == Date) { New_End = i - Days_To_Skip; break; } }
+
+            int New_Start = New_End - Sample_Ammount + 1; if (New_Start < 0) { New_Start = 0; }
+
+            for (int i = New_Start; i <= New_End - Days_To_Skip; i++)
+            {
+                Sampled = new CLASS_Ticker_DataBase();
+                Sampled = Database[i];
+                Sampled_Database.Add(Sampled);
+            }
+
+            return Sampled_Database;
+        }
 
         static async Task<List<CLASS_Ticker_DataBase>> LIST_Get_Database_Of_Ticker(string Ticker, double DaysToGoBack = 60)
         {
@@ -65,7 +119,7 @@ namespace Algorithm
             Console.ReadLine();
         }
 
-        static async Task<List<CLASS_Ticker_Info>> LIST_Get_All_Ticker_Current_Info_From_Array(string[] ARRAY_Input_Tickers)
+        static async Task<List<CLASS_Ticker_Info>> LIST_Get_Tickers_Current_From_Array(string[] ARRAY_Input_Tickers)
         {
             List<CLASS_Ticker_Info> LIST_Tickers = new List<CLASS_Ticker_Info>();
             CLASS_Ticker_Info OBJECT_Actual_Ticker = new CLASS_Ticker_Info();
@@ -160,6 +214,28 @@ namespace Algorithm
         public double Close { get; set; }
         public double High { get; set; }
         public double Low { get; set; }
+        public double Average_Open_Close { get; set; }
+        public double Average_Growth { get; set; }
+        public double Overall_Growth { get; set; }
+        public double Open_Growth { get; set; }
+        public double High_Growth { get; set; }
+        public double Low_Growth { get; set; }
+        public double Close_Growth { get; set; }
+        public double Average_Growth_Sample { get; set; }
+        public double Open_Growth_Sample { get; set; }
+        public double Close_Growth_Sample { get; set; }
+        public double Low_Growth_Sample { get; set; }
+        public double Average_Prediction { get; set; }
+        public double Open_Prediction { get; set; }
+        public double Close_Prediction { get; set; }
+        public double Low_Prediction { get; set; }
+        public double Standard_Deviation_Growth_Sample { get; set; }
+        public double Standard_Deviation_All_Time { get; set; }
+        public double Open_Difference { get; set; }
+        public double Low_Recalibrated { get; set; }
+        public double Threshold_Base { get; set; }
+        public double Threshold_Recalibrated { get; set; }
+        public double New_Low { get; set; }
     }
 
     class CLASS_Ticker_Info
