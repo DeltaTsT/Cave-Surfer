@@ -13,9 +13,7 @@ namespace Algorithm
         static async Task Main()
         {
 
-            List<CLASS_Ticker_DataBase> LIST_Ticker_Database = await LIST_Get_Database_Of_Ticker("SI", 120);
-
-
+            List<CLASS_Ticker_DataBase> LIST_Ticker_Database = await LIST_Get_Database_Of_Ticker("TRCH", 120);
 
 
 
